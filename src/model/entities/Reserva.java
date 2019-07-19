@@ -30,9 +30,17 @@ public long duracao() {
 	long dif = checkOut.getTime()-checkIn.getTime();
 	return TimeUnit.DAYS.convert(dif, TimeUnit.MILLISECONDS);
 }
-public void atualizarReserva(Date checkIn , Date checkOut) {
+public String atualizarReserva(Date checkIn , Date checkOut) {
+	Date now = new Date();
+	if(checkIn.before(now)|| checkOut.before(now)) {
+		return "As datas para reserva devem ser futuras.";
+	}
+	if(!checkOut.after(checkIn)){
+		return "A data de check-out deve ser posterior ao check-in.";
+	}
 	this.checkIn= checkIn;
 	this.checkOut= checkOut;
+	return null;
 }
 @Override
 public String toString() {
